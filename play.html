@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Trốn Chướng Ngại Vật</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Intro -->
+  <div id="intro" class="container">
+    <h1 class="logo">🎮 Trốn Chướng Ngại Vật</h1>
+    <p class="tagline">Điều khiển nhân vật né chướng ngại, sống càng lâu điểm càng cao!</p>
+    <button id="playBtn" class="play-btn">▶ Chơi Ngay</button>
+  </div>
+
+  <!-- Game -->
+  <div id="gameArea" class="game-container" style="display:none;">
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+  </div>
+
+  <script src="game.js"></script>
+  <script>
+    // Khi nhấn nút Play
+    document.getElementById("playBtn").addEventListener("click", () => {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("gameArea").style.display = "flex";
+      startGame(); // gọi hàm start từ game.js
+    });
+  </script>
+</body>
+</html>
