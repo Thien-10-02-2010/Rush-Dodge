@@ -1,0 +1,186 @@
+/* ====== Reset & Base ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(160deg, #0a0a0a, #1a1a1a);
+  color: #fff;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+h1, h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+a, button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ====== Intro Section ====== */
+.intro {
+  padding: 50px 20px;
+}
+.intro .logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.intro h1 {
+  font-size: 2.2em;
+}
+.intro .tagline {
+  color: #ccc;
+  margin: 12px auto 24px;
+  max-width: 600px;
+}
+.big-btn {
+  background: #00bfff;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.big-btn:hover {
+  background: #009acd;
+}
+
+/* ====== Game Wrapper ====== */
+.hidden { display: none; }
+.game-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.game-frame {
+  border: 3px solid #444;
+  background: #000;
+  margin-bottom: 14px;
+}
+canvas {
+  display: block;
+  background: #000;
+}
+.hud {
+  display: flex;
+  gap: 20px;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+}
+.hud .muted {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* ====== Leaderboard Button ====== */
+.icon-btn {
+  position: fixed;
+  left: 14px;
+  top: 12px;
+  z-index: 999;
+  background: rgba(255,255,255,0.06);
+  border: none;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.icon-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* ====== Modal ====== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+}
+.modal .modal-content {
+  background: #111;
+  padding: 18px;
+  border-radius: 10px;
+  width: 360px;
+  color: #fff;
+  text-align: left;
+}
+.modal .modal-content.large {
+  width: 720px;
+  max-height: 80vh;
+  overflow: auto;
+}
+.modal .modal-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+.modal input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* ====== Leaderboard ====== */
+.leader-list {
+  max-height: 60vh;
+  overflow: auto;
+  background: rgba(255,255,255,0.02);
+  padding: 8px;
+  border-radius: 6px;
+}
+.leader-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.leader-item .left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.leader-item .rank {
+  font-weight: 700;
+  width: 32px;
+  color: #ffd700;
+}
+.small-btn {
+  background: #444;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+}
+.small-btn:hover {
+  background: #666;
+}
+.muted {
+  color: #bbb;
+  font-size: 14px;
+}
+
+/* ====== Footer ====== */
+footer {
+  padding: 14px;
+  color: #aaa;
+  font-size: 14px;
+}

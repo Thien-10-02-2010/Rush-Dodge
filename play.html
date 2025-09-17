@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Obstacle Dash</title>
+  <link rel="icon" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- SEO -->
+  <meta name="description" content="Obstacle Dash - Game né chướng ngại vật, vượt qua thử thách, ghi điểm cao nhất và cạnh tranh trên bảng xếp hạng toàn cầu.">
+  <meta name="keywords" content="Obstacle Dash, obstacle game, dodge game, web game, HTML5 game">
+  <meta property="og:title" content="Obstacle Dash" />
+  <meta property="og:description" content="Điều khiển nhân vật, né chướng ngại vật, cạnh tranh điểm cao nhất!" />
+  <meta property="og:image" content="logo.png" />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+  <!-- Header giới thiệu -->
+  <header class="intro">
+    <img src="logo.png" alt="Obstacle Dash Logo" class="logo">
+    <h1>Obstacle Dash</h1>
+    <p class="tagline">Điều khiển nhân vật, né chướng ngại vật rơi xuống và giành lấy điểm số cao nhất!</p>
+    <button id="startBtn" class="big-btn">▶ Bắt đầu chơi</button>
+  </header>
+
+  <!-- Leaderboard button top-left -->
+  <button id="leaderBtn" class="icon-btn" title="Bảng xếp hạng">🏆</button>
+
+  <!-- Modal đăng ký tên -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <h3>Đăng ký tên của bạn</h3>
+      <input id="playerNameInput" placeholder="Tên (duy nhất)" />
+      <div class="modal-actions">
+        <button id="registerBtn" class="small-btn">Bắt đầu chơi</button>
+      </div>
+      <div id="registerMsg" class="muted"></div>
+    </div>
+  </div>
+
+  <!-- Modal leaderboard -->
+  <div id="leaderModal" class="modal">
+    <div class="modal-content large">
+      <h3>Bảng xếp hạng - Top 1000</h3>
+      <div id="leaderList" class="leader-list">Đang tải...</div>
+      <div class="modal-actions">
+        <button id="closeLeader" class="small-btn">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game area -->
+  <main class="game-wrapper hidden" id="gameSection">
+    <div class="game-frame">
+      <canvas id="gameCanvas" width="400" height="600"></canvas>
+    </div>
+    <div class="hud">
+      <div id="scoreDisplay">Score: 0</div>
+      <div id="highDisplay">High: 0</div>
+      <div id="playerTag" class="muted">Chưa đăng ký</div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Obstacle Dash | Made with ❤️</p>
+  </footer>
+
+  <!-- Game logic -->
+  <script type="module" src="game.js"></script>
+  <script>
+    // Khi bấm nút bắt đầu -> ẩn intro, hiện game
+    document.getElementById('startBtn').addEventListener('click', ()=>{
+      document.querySelector('.intro').style.display = 'none';
+      document.getElementById('gameSection').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
