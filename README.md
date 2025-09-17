@@ -22,11 +22,3 @@ Một trò chơi web HTML5 đơn giản nhưng gây nghiện: điều khiển nh
 - Tối đa **500s** = hoàn thành một vòng → tăng số lần *Completion*.  
 
 ---
-
-## 🚀 Cách chạy game
-
-### 1. Clone repo
-```bash
-git clone https://github.com/your-username/obstacle-dash.git
-cd obstacle-dash
-
