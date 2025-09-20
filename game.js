@@ -361,8 +361,41 @@ function draw(){
 window.onload=()=>{
   canvas=document.getElementById('gameCanvas');
   ctx=canvas.getContext('2d');
+
+  const input = document.getElementById('playerNameInput');
+  const btn = document.getElementById('registerBtn');
+  const msg = document.getElementById('registerMsg');
+  const panel = document.getElementById('registerPanel');
+
+  // Kiểm tra nếu đã có tên thì bỏ qua đăng ký
+  const existing = localStorage.getItem(CONFIG.STORAGE_KEYS.NAME);
+  if(existing){
+    panel.style.display="none";
+    draw();
+  }
+
+  // Xử lý khi nhấn nút đăng ký
+  btn.onclick=()=>{
+    const name=input.value;
+    const res=registerPlayer(name);
+    if(res.ok){
+      msg.style.color="lime";
+      msg.textContent="Đăng ký thành công!";
+      panel.style.display="none";
+      draw();
+    } else {
+      msg.style.color="red";
+      msg.textContent=res.msg;
+    }
+  };
+
   document.addEventListener('keydown',e=>{
-    if(e.code==='Space' && gameState==='intro') startGame();
+    if(e.code==='Space' && gameState==='intro' && localStorage.getItem(CONFIG.STORAGE_KEYS.NAME)){
+      startGame();
+    }
   });
+
   draw();
 };
+
+
