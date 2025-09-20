@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rush & Dodge</title>
+  <link rel="icon" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Rush & Dodge - game né chướng ngại vật. Chơi ngay, ghi điểm cao và so tài bảng xếp hạng!" />
+</head>
+<body>
+  <!-- Leaderboard button -->
+  <button id="leaderBtn" class="icon-btn" title="Bảng xếp hạng">🏆</button>
+
+  <!-- Intro (index-like) -->
+  <section id="intro" class="intro">
+    <img src="logo.png" alt="Rush & Dodge Logo" class="logo" />
+    <h1>Rush & Dodge</h1>
+    <p class="tagline">Điều khiển nhân vật, né chướng ngại vật rơi xuống. Sống lâu càng nhiều điểm!</p>
+
+    <div class="instructions">
+      <h3>📖 Hướng dẫn</h3>
+      <ul>
+        <li>Dùng phím <b>←</b> và <b>→</b> để di chuyển.</li>
+        <li>Mỗi giây sống = +1 điểm. Đạt <b>500s</b> = hoàn thành 1 vòng.</li>
+        <li>Nhập tên (duy nhất) trước khi chơi — được dùng cho bảng xếp hạng cục bộ.</li>
+      </ul>
+    </div>
+
+    <div class="controls-row">
+      <input id="nameInput" placeholder="Tên của bạn (không trùng)"/>
+      <button id="registerBtn" class="small-btn">Đăng ký & Lưu tên</button>
+    </div>
+
+    <button id="startBtn" class="big-btn">▶ Bắt đầu chơi</button>
+    <div id="introMsg" class="muted"></div>
+  </section>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderModal" class="modal">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3>Bảng xếp hạng (cục bộ)</h3>
+        <button id="closeLeader" class="small-btn">Đóng</button>
+      </div>
+      <div id="leaderList" class="leader-list">Đang tải...</div>
+    </div>
+  </div>
+
+  <!-- Game Area (hidden until Play) -->
+  <section id="gameSection" class="hidden">
+    <div class="topbar">
+      <div><strong id="playerTag">Chưa đăng ký</strong></div>
+      <div id="hud">
+        <span id="scoreDisplay">Score: 0</span>
+        <span id="highDisplay">High: 0</span>
+        <span id="compDisplay">Completions: 0</span>
+      </div>
+    </div>
+
+    <div class="game-frame">
+      <canvas id="gameCanvas" width="360" height="560"></canvas>
+    </div>
+
+    <div class="controls-note muted">Nhấn <b>Space</b> để chơi lại khi chết. ← / → để di chuyển.</div>
+  </section>
+
+  <footer>
+    <p>© 2025 Obstacle Dash — Made with ❤️</p>
+  </footer>
+
+  <script src="game.js"></script>
+  <script>
+    // UI wiring
+    const intro = document.getElementById('intro');
+    const gameSection = document.getElementById('gameSection');
+    const startBtn = document.getElementById('startBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const nameInput = document.getElementById('nameInput');
+    const introMsg = document.getElementById('introMsg');
+    const playerTag = document.getElementById('playerTag');
+    const leaderBtn = document.getElementById('leaderBtn');
+    const leaderModal = document.getElementById('leaderModal');
+    const closeLeader = document.getElementById('closeLeader');
+    const leaderList = document.getElementById('leaderList');
+
+    // load saved player name if any
+    const savedName = localStorage.getItem('od_player_name');
+    if (savedName) {
+      nameInput.value = savedName;
+      playerTag.textContent = `Player: ${savedName}`;
+    }
+
+    registerBtn.addEventListener('click', () => {
+      const name = (nameInput.value || '').trim();
+      if (!name) { introMsg.textContent = 'Tên không được để trống.'; return; }
+      const ok = window.OD_RegisterPlayerLocal(name);
+      if (!ok.success) {
+        introMsg.textContent = ok.message;
+        return;
+      }
+      introMsg.textContent = 'Đăng ký thành công. Bạn có thể bấm Bắt đầu.';
+      playerTag.textContent = `Player: ${name}`;
+      localStorage.setItem('od_player_name', name);
+    });
+
+    startBtn.addEventListener('click', () => {
+      // require name
+      const currentName = localStorage.getItem('od_player_name');
+      if (!currentName) {
+        introMsg.textContent = 'Vui lòng nhập tên và đăng ký trước khi chơi.';
+        return;
+      }
+      intro.style.display = 'none';
+      gameSection.classList.remove('hidden');
+      // call game start
+      window.startGame();
+    });
+
+    // leaderboard UI
+    leaderBtn.addEventListener('click', async () => {
+      leaderModal.style.display = 'flex';
+      leaderList.innerHTML = 'Đang tải...';
+      const list = window.OD_LoadLeaderboardLocal();
+      if (!list.length) {
+        leaderList.innerHTML = '<div class="muted">Chưa có người chơi</div>';
+        return;
+      }
+      leaderList.innerHTML = '';
+      // sort by completions desc then highScore desc
+      list.sort((a,b) => (b.completions - a.completions) || (b.highScore - a.highScore));
+      const max = Math.min(list.length, 1000);
+      for (let i=0;i<max;i++){
+        const p = list[i];
+        const el = document.createElement('div');
+        el.className = 'leader-item';
+        el.innerHTML = `<div class="left"><div class="rank">${i+1}</div><div><strong>${escapeHtml(p.name)}</strong><div class="muted">completions: ${p.completions}</div></div></div><div>High: ${p.highScore || 0}</div>`;
+        leaderList.appendChild(el);
+      }
+    });
+    closeLeader.addEventListener('click', ()=> leaderModal.style.display = 'none');
+
+    // helper escape
+    function escapeHtml(s){ return (''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  </script>
+</body>
+</html>
