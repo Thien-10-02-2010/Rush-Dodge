@@ -1,4 +1,4 @@
-# 🎮 Obstacle Dash
+# 🎮 Rush & Dodge
 
 Một trò chơi web HTML5 đơn giản nhưng gây nghiện: điều khiển nhân vật né chướng ngại vật, sống sót càng lâu càng tốt!  
 Được phát triển bằng **HTML + CSS + JavaScript (Canvas API)**.  
