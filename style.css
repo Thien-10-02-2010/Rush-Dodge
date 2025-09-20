@@ -1,0 +1,94 @@
+/* style.css - phong cách đơn giản, rõ ràng */
+
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(160deg,#0b1221,#101820);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* header intro */
+.intro {
+  padding: 34px 20px;
+  text-align: center;
+  max-width: 920px;
+}
+.logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 2px solid rgba(255,255,255,0.06);
+}
+h1 { font-size: 2em; margin-bottom: 6px; }
+.tagline { color: #bfc9d8; margin-bottom: 16px; max-width: 760px; margin-left:auto; margin-right:auto; }
+
+.instructions { text-align: left; display:inline-block; margin-bottom: 16px; color:#dce6f1; }
+.instructions h3 { margin-bottom:6px; }
+.instructions ul { list-style: none; padding-left: 0; }
+.instructions li { margin:6px 0; }
+
+/* controls */
+.controls-row { display:flex; gap:8px; justify-content:center; margin-bottom:12px; }
+.controls-row input { padding:8px 10px; border-radius:8px; border: none; min-width:220px; background:#fff; color:#000; }
+.big-btn { background: #00aaff; color:#fff; padding:12px 20px; font-size:16px; border-radius:10px; border:none; cursor:pointer; }
+.big-btn:hover { background:#008fd1; }
+.small-btn { background:#2b3440; color:#fff; padding:8px 12px; border-radius:8px; border:none; cursor:pointer; }
+.small-btn:hover { background:#39434f; }
+.muted { color:#9fb0c6; margin-top:6px; }
+
+/* top-left icon */
+.icon-btn {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  z-index: 99;
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  border: none;
+  padding:10px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.08); }
+
+/* modal */
+.modal{
+  position: fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background: rgba(0,0,0,0.6); z-index: 200;
+}
+.modal .modal-content{
+  background:#0f1720; padding:16px; border-radius:10px; width: 720px; max-height:80vh; overflow:auto;
+  color:#fff;
+}
+.modal .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+
+/* leaderboard list */
+.leader-list { background: rgba(255,255,255,0.02); border-radius:8px; padding:8px; }
+.leader-item { display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.leader-item .left { display:flex; gap:8px; align-items:center; }
+.leader-item .rank { font-weight:700; color:#ffd700; width:36px; }
+
+/* game section */
+.hidden { display:none; }
+.game-frame { border-radius:8px; overflow:hidden; border:3px solid rgba(255,255,255,0.04); background:#000; margin:12px auto; }
+canvas { display:block; background:#020405; }
+
+/* HUD */
+.topbar { display:flex; justify-content:space-between; align-items:center; width:360px; margin-top:12px; }
+#hud { display:flex; gap:10px; align-items:center; font-weight:600; }
+.controls-note { margin:10px auto 30px; }
+
+/* footer */
+footer { margin-top:auto; padding:12px; color:#9fb0c6; font-size:13px; }
+
+/* responsive small screens */
+@media (max-width:420px){
+  .game-frame { transform: scale(0.9); transform-origin: top center; }
+  .controls-row input { min-width: 150px; }
+}
